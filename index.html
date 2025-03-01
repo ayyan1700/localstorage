@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgb(0, 0, 0);
+      width: 300px;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+      word-wrap: break-word;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 1%;
+      border: none;
+      border-radius: 4px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    button:active {
+      background-color: #3e8e41;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      max-height: 300px;
+      overflow-x: auto;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      word-wrap: break-word;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    li button {
+      background-color: #ff6347;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    li button:hover {
+      background-color: #e55347;
+    }
+
+    li button:active {
+      background-color: #d94337;
+    }
+
+    .clear-all {
+      background-color: #ff5722;
+      width: 100%;
+    }
+
+    .clear-all:hover {
+      background-color: #f44336;
+    }
+</style>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <input id="todo" type="text" placeholder="Enter a task">
+    <button onclick="add()">Add Todo</button>
+    <button class="clear-all" onclick="clearAll()">Clear All</button>
+    <ul id="abc"></ul>
+  </div>
+
+  <script>
+  let todotext = document.getElementById("todo");
+  let ul = document.getElementById("abc");
+  let todoData =  JSON.parse(localStorage.getItem("todo")) || [] ;
+  render();
+
+  function render(){
+    ul.innerHTML=""; 
+    for (i = 0 ; i <  todoData.length ; i++){
+      ul.innerHTML += `<li> ${todoData[i]}
+        <button onclick="edit(${i})">Edits</button>
+        <button onclick="del(${i})">Del</button>
+        </li>`
+    };  
+  };
+
+  function add(){
+    todoData.push(todo.value);
+    localStorage.setItem('todo', JSON.stringify(todoData));
+    console.log(todoData);
+    ul.innerHTML=``;    
+    render();  
+  };
+
+  //for edit array
+  function edit(index) {
+    let newTodo = prompt("Enter the new text for the todo:", todoData[index]);
+    todoData[index] = newTodo;
+    localStorage.setItem("todo",JSON.stringify(todoData));
+    render();
+  };
+  //for delete All array
+  function del(index){
+    todoData.splice(index, 1); 
+     localStorage.setItem("todo", JSON.stringify(todoData)); 
+    render();
+  };
+   //for clear All array
+ function clearAll() {
+      todoData = []; 
+      localStorage.setItem("todo", JSON.stringify(todoData)); 
+      render();
+    };
+
+  </script>
+  </body>
+</html>
